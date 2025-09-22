@@ -64,6 +64,9 @@ export const Toolbar = ({
   const deleteTable = () => {
     editor.chain().focus().deleteTable().run();
   };
+  const deleteColumn = () => {
+    editor.chain().focus().deleteColumn().run();
+  };
   const duplicateColumn = () => {
     editor.chain().focus().duplicateColumn().run();
   };
@@ -269,6 +272,14 @@ export const Toolbar = ({
                   className="text-destructive"
                 >
                   <Trash2 className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={deleteColumn}
+                  className="text-destructive"
+                >
+                  <Trash2 className="h-4 w-4" /> Col
                 </Button>
               </>
             )}
