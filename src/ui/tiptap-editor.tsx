@@ -15,7 +15,7 @@ import { Toolbar } from "./editor/toolbar";
 const { TablePlus, TableRowPlus, TableCellPlus, TableHeaderPlus } =
   PaginationTable;
 
-const TiptapEditor = ({onlyEditor}: {onlyEditor: boolean}) => {
+const TiptapEditor = ({ onlyEditor }: { onlyEditor: boolean }) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -88,15 +88,12 @@ const TiptapEditor = ({onlyEditor}: {onlyEditor: boolean}) => {
           "table",
           "duplicate-table",
           "blockquote",
+          "print",
         ]}
         editor={editor}
       />
-      <div className="">
-        <EditorContent
-          editor={editor}
-          className="w-full border mb-5 mt-2"
-          id="editor"
-        />
+      <div className="" id="printableArea">
+        <EditorContent editor={editor} id="editor" className="w-full border mb-5 mt-2" />
       </div>
     </div>
   );

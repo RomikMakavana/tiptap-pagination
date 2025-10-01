@@ -175,7 +175,49 @@ button:focus-visible {
   }
 }
 
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  
+  #printableArea,
+  #printableArea * {
+    visibility: visible;
+  }
 
+  .toolbar-container {
+    display: none;
+  }
+
+  .handle {
+    display: none;
+  }
+
+  #editor .rm-with-pagination {
+    min-height: 1000px !important;
+    height: auto !important;
+  }
+
+  #editor {
+    border: none;
+  }
+
+  #editor #pages {
+    display: none;
+  }
+ 
+  #editor .rm-first-page-header {
+    display: none;
+  }
+}
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;        
+    background-color: transparent;        
+  }
+}
 
 @import "./styles/editor.css";
 @import "./styles/pagination.css";

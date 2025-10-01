@@ -13,12 +13,14 @@ import {
   List,
   Quote,
   TableIcon,
-  Copy
+  Copy,
+  Printer
 } from "lucide-react";
 import SponsorWork from "../sponsor-work";
 import { Button } from "../button";
 import { Editor } from "@tiptap/react";
 import { ToolbarOptions } from "@/types";
+import * as Dialog from '@radix-ui/react-dialog';
 
 export const Toolbar = ({
   onlyEditor,
@@ -64,9 +66,6 @@ export const Toolbar = ({
   const deleteTable = () => {
     editor.chain().focus().deleteTable().run();
   };
-  const deleteColumn = () => {
-    editor.chain().focus().deleteColumn().run();
-  };
   const duplicateColumn = () => {
     editor.chain().focus().duplicateColumn().run();
   };
@@ -75,8 +74,8 @@ export const Toolbar = ({
   };
 
   return (
-    <div className="sticky top-0 z-[10] pt-8">
-      {onlyEditor ? <> </> : <SponsorWork />} 
+    <div className="sticky top-0 z-[10] pt-8 toolbar-container">
+      {onlyEditor ? <> </> : <SponsorWork />}
       <div className="border rounded-lg shadow-sm p-2 bg-muted/90 flex flex-wrap gap-1 backdrop-blur-md">
         <div className="flex flex-wrap gap-0.5">
           {optionsList.includes("undo") && (
@@ -213,24 +212,24 @@ export const Toolbar = ({
               <>
                 {
                   optionsList.includes("duplicate-table") && (
-                   <>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={duplicateColumn}
-                      className="text-xs"
-                    >
-                      <Copy className="h-4 w-4" /> &nbsp; Column
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={duplicateRow}
-                      className="text-xs"
-                    >
-                      <Copy className="h-4 w-4" /> &nbsp; Row
-                    </Button>
-                   </> 
+                    <>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={duplicateColumn}
+                        className="text-xs"
+                      >
+                        <Copy className="h-4 w-4" /> &nbsp; Column
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={duplicateRow}
+                        className="text-xs"
+                      >
+                        <Copy className="h-4 w-4" /> &nbsp; Row
+                      </Button>
+                    </>
                   )
                 }
                 <Button
@@ -273,14 +272,6 @@ export const Toolbar = ({
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={deleteColumn}
-                  className="text-destructive"
-                >
-                  <Trash2 className="h-4 w-4" /> Col
-                </Button>
               </>
             )}
           </>
@@ -306,6 +297,42 @@ export const Toolbar = ({
               </Button>
             )}
           </>
+        )}
+        {optionsList.includes("print") && (
+          <Dialog.Root>
+            <Dialog.Trigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+              >
+                <Printer className="h-4 w-4" />
+              </Button>
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Overlay className="fixed inset-0 bg-black/50 z-50">
+                <Dialog.Content className="fixed top-1/2 left-1/2 max-w-[450px] -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded shadow-lg">
+                  <Dialog.Title className="text-lg font-bold">
+                    Print Page
+                  </Dialog.Title>
+                  <Dialog.Description className="mt-2">
+                    This is only a page print (without header and footer), not an exported document. Do you want to continue?
+                  </Dialog.Description>
+                  <div className="mt-4 flex justify-end gap-3">
+                    <Dialog.Close asChild>
+                      <Button variant="outline" size="lg">Cancel</Button>
+                    </Dialog.Close>
+                    <Button
+                      variant="ghost"
+                      size="lg"
+                      onClick={() => window.print()}
+                    >
+                      Print
+                    </Button>
+                  </div>
+                </Dialog.Content>
+              </Dialog.Overlay>
+            </Dialog.Portal>
+          </Dialog.Root>
         )}
       </div>
     </div>
