@@ -10,4 +10,5 @@ export type ToolbarOptions =
   | "image"
   | "table"
   | "duplicate-table"
+  | "print"
   | "blockquote";
