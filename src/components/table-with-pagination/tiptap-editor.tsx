@@ -8,7 +8,7 @@ import Color from "@tiptap/extension-color";
 import { editorContent } from "@/lib/contents/table-plus-with-pagination";
 import { Toolbar } from "@/ui/editor/toolbar";
 import { PaginationTable } from "tiptap-table-plus";
-import { PaginationPlus } from "tiptap-pagination-plus";
+import { PAGE_SIZES, PaginationPlus } from "tiptap-pagination-plus";
 
 const { TableCellPlus, TableHeaderPlus, TableRowPlus, TablePlus } = PaginationTable;
 
@@ -28,7 +28,6 @@ const TiptapEditor = ({onlyEditor}: {onlyEditor: boolean}) => {
       TableCellPlus,
       TableHeaderPlus,
       PaginationPlus.configure({
-        pageHeight: 842,
         pageGap: 20,
         pageBreakBackground: "hsl(var(--background))",
         pageHeaderHeight: 25,
@@ -37,12 +36,11 @@ const TiptapEditor = ({onlyEditor}: {onlyEditor: boolean}) => {
         footerLeft: "Page {page}",
         headerLeft: "Header Left",
         headerRight: "Header Right",
-        marginTop: 30,
-        marginBottom: 50,
-        marginLeft: 70,
-        marginRight: 70,
         contentMarginTop: 30,
         contentMarginBottom: 30,
+        ...PAGE_SIZES.A4,
+        marginTop: 76,
+        marginBottom: 76,
       }),
     ],
     content: editorContent,
@@ -64,11 +62,11 @@ const TiptapEditor = ({onlyEditor}: {onlyEditor: boolean}) => {
 
   return (
     <div className="">
-      <Toolbar onlyEditor={onlyEditor} optionsList={["undo", "redo", "bold", "italic", "underline", "strikethrough", "heading", "table"]} editor={editor} />
-      <div className="">
+      <Toolbar onlyEditor={onlyEditor} optionsList={["undo", "redo", "bold", "italic", "underline", "strikethrough", "heading", "table", "page-size", "print"]} editor={editor} />
+      <div className="overflow-x-auto" id="printableArea">
         <EditorContent
           editor={editor}
-          className="w-full border mb-5 mt-2"
+          className="w-full mb-5 mt-2"
           id="editor"
         />
       </div>

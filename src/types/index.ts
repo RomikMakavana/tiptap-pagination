@@ -11,4 +11,5 @@ export type ToolbarOptions =
   | "table"
   | "duplicate-table"
   | "print"
-  | "blockquote";
+  | "blockquote"
+  | "page-size";

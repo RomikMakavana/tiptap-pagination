@@ -47,7 +47,7 @@ const TiptapEditor = ({onlyEditor}: {onlyEditor: boolean}) => {
       <div className="">
         <EditorContent
           editor={editor}
-          className="w-full border mb-5 mt-2"
+          className="w-full mb-5 mt-2"
           id="editor"
         />
       </div>
