@@ -7,7 +7,7 @@ function TablePlusWithPagination() {
   const [searchParams] = useSearchParams();
   const onlyEditor = useMemo(() => searchParams.has("frame"), [searchParams]);
   return (
-    <div className="max-w-4xl mx-auto px-2 relative">
+    <div className="mx-auto px-2 relative">
       <TiptapEditor onlyEditor={onlyEditor} />
       {onlyEditor ? <> </> : <OpenForWork />} 
     </div>

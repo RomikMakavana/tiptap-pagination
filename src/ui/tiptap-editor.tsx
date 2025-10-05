@@ -7,10 +7,10 @@ import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
 import { PaginationTable } from "tiptap-table-plus";
-import { PaginationPlus } from "tiptap-pagination-plus";
 import { ImagePlus } from "tiptap-image-plus";
 import { editorContent } from "@/lib/editor-content";
 import { Toolbar } from "./editor/toolbar";
+import { PaginationPlus, PAGE_SIZES } from "tiptap-pagination-plus";
 
 const { TablePlus, TableRowPlus, TableCellPlus, TableHeaderPlus } =
   PaginationTable;
@@ -36,7 +36,6 @@ const TiptapEditor = ({ onlyEditor }: { onlyEditor: boolean }) => {
         },
       }),
       PaginationPlus.configure({
-        pageHeight: 842,
         pageGap: 20,
         pageBreakBackground: "hsl(var(--background))",
         pageHeaderHeight: 25,
@@ -45,12 +44,11 @@ const TiptapEditor = ({ onlyEditor }: { onlyEditor: boolean }) => {
         footerLeft: "Page {page}",
         headerLeft: "Header Left",
         headerRight: "Header Right",
-        marginTop: 30,
-        marginBottom: 50,
-        marginLeft: 70,
-        marginRight: 70,
         contentMarginTop: 30,
         contentMarginBottom: 30,
+        ...PAGE_SIZES.A4,
+        marginTop: 76,
+        marginBottom: 76,
       }),
     ],
     // content: editorContentLong,
@@ -89,11 +87,12 @@ const TiptapEditor = ({ onlyEditor }: { onlyEditor: boolean }) => {
           "duplicate-table",
           "blockquote",
           "print",
+          "page-size",
         ]}
         editor={editor}
       />
-      <div className="" id="printableArea">
-        <EditorContent editor={editor} id="editor" className="w-full border mb-5 mt-2" />
+      <div className="overflow-x-auto" id="printableArea">
+        <EditorContent editor={editor} id="editor" className="w-full mb-5 mt-2" />
       </div>
     </div>
   );

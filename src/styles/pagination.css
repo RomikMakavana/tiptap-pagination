@@ -1,6 +1,6 @@
-.rm-pagination-gap {
+/* .rm-pagination-gap {
   @apply border-t border-b border-[#e5e5e5];
-}
+} */
 
 .rm-with-pagination .rm-page-footer::after {
   @apply text-gray-500;
