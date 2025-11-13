@@ -2,18 +2,6 @@ export const editorContent = {
     "type": "doc",
     "content": [
         {
-            "type": "heading",
-            "attrs": {
-                "level": 1
-            },
-            "content": [
-                {
-                    "type": "text",
-                    "text": "Tiptap Table Plus With Pagination"
-                }
-            ]
-        },
-        {
             "type": "table",
             "attrs": {
                 "columnSize": "9.1,39.41,21.79,29.7"

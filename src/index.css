@@ -193,20 +193,20 @@ button:focus-visible {
     display: none;
   }
 
-  #editor .rm-with-pagination {
+  .editor-container .rm-with-pagination {
     min-height: 1000px !important;
     height: auto !important;
   }
 
-  #editor {
+  .editor-container {
     border: none;
   }
 
-  #editor #pages {
+  .editor-container #pages {
     display: none;
   }
  
-  #editor .rm-first-page-header {
+  .editor-container .rm-first-page-header {
     display: none;
   }
 }
@@ -222,3 +222,4 @@ button:focus-visible {
 @import "./styles/editor.css";
 @import "./styles/pagination.css";
 @import "./styles/table.css";
+@import "./styles/header-footer.css";

@@ -28,6 +28,7 @@ const TiptapEditor = ({ onlyEditor }: { onlyEditor: boolean }) => {
       TableHeaderPlus,
       ListItem,
       ImagePlus.configure({
+        inline: false,
         containerStyle: {
           background:
             "linear-gradient(90deg,rgba(30, 88, 117, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%)",
@@ -38,12 +39,10 @@ const TiptapEditor = ({ onlyEditor }: { onlyEditor: boolean }) => {
       PaginationPlus.configure({
         pageGap: 20,
         pageBreakBackground: "hsl(var(--background))",
-        pageHeaderHeight: 25,
-        pageFooterHeight: 25,
         footerRight: "Made with ❤️ by Romik",
-        footerLeft: "Page {page}",
-        headerLeft: "Header Left",
-        headerRight: "Header Right",
+        footerLeft: "<p><strong>Contact Me :</strong><br>dev.romikmakavana@gmail.com</p>",
+        headerLeft: "<h1>Tiptap Pagination Plus</h1><p>by Romik Makavana</p>",
+        headerRight: "Page {page}",
         contentMarginTop: 30,
         contentMarginBottom: 30,
         ...PAGE_SIZES.A4,
@@ -88,11 +87,12 @@ const TiptapEditor = ({ onlyEditor }: { onlyEditor: boolean }) => {
           "blockquote",
           "print",
           "page-size",
+          "header-footer",
         ]}
         editor={editor}
       />
-      <div className="overflow-x-auto" id="printableArea">
-        <EditorContent editor={editor} id="editor" className="w-full mb-5 mt-2" />
+      <div className="overflow-x-auto relative" id="printableArea">
+        <EditorContent editor={editor} id="editor" className="w-full mb-5 mt-2 editor-container" />
       </div>
     </div>
   );

@@ -38,12 +38,10 @@ const editor = new Editor({
       pageGapBorderSize: 1,   // Border size for page gaps
       pageGapBorderColor: "#e5e5e5", // Border color for page gaps
       pageBreakBackground: "#ffffff",  // Background color for page gaps
-      pageHeaderHeight: 30,   // Height of page header in pixels
-      pageFooterHeight: 30,   // Height of page footer in pixels
-      footerRight: "{page}",  // Custom text to display in the footer right side
-      footerLeft: "",         // Custom text to display in the footer left side
-      headerRight: "",        // Custom text to display in the header right side
-      headerLeft: "",         // Custom text to display in the header left side
+      footerRight: "Made with ❤️ by Romik",  // Custom HTML content to display in the footer right side
+      footerLeft: "<p><strong>Contact Me :</strong><br>dev.romikmakavana@gmail.com</p>",         // Custom HTML content to display in the footer left side
+      headerRight: "Page {page}",        // Custom HTML content to display in the header right side
+      headerLeft: "<h1>Tiptap Pagination Plus</h1><p>by Romik Makavana</p>",         // Custom HTML content to display in the header left side
       marginTop: 20,          // Top margin for pages
       marginBottom: 20,       // Bottom margin for pages
       marginLeft: 50,         // Left margin for pages
@@ -84,12 +82,10 @@ Key points for table pagination:
 | `pageGapBorderSize` | number | 1 | Border size for page gaps |
 | `pageGapBorderColor` | string | "#e5e5e5" | Border color for page gaps |
 | `pageBreakBackground` | string | "#ffffff" | Background color for page gaps |
-| `pageHeaderHeight` | number | 30 | Height of page header in pixels |
-| `pageFooterHeight` | number | 30 | Height of page footer in pixels |
-| `footerRight` | string | "{page}" | Custom text to display in the footer right side |
-| `footerLeft` | string | "" | Custom text to display in the footer left side |
-| `headerRight` | string | "" | Custom text to display in the header right side |
-| `headerLeft` | string | "" | Custom text to display in the header left side |
+| `footerRight` | string | "{page}" | Custom HTML content to display in the footer right side (supports multiline and rich text) |
+| `footerLeft` | string | "" | Custom HTML content to display in the footer left side (supports multiline and rich text) |
+| `headerRight` | string | "" | Custom HTML content to display in the header right side (supports multiline and rich text) |
+| `headerLeft` | string | "" | Custom HTML content to display in the header left side (supports multiline and rich text) |
 | `marginTop` | number | 20 | Top margin for pages |
 | `marginBottom` | number | 20 | Bottom margin for pages |
 | `marginLeft` | number | 50 | Left margin for pages |
@@ -110,10 +106,8 @@ The PaginationPlus extension provides several commands to dynamically update pag
 | `updatePageGap` | `gap: number` | Update the gap between pages in pixels |
 | `updateMargins` | `margins: { top: number, bottom: number, left: number, right: number }` | Update page margins |
 | `updateContentMargins` | `margins: { top: number, bottom: number }` | Update content margins within pages |
-| `updateHeaderHeight` | `height: number` | Update the height of page headers |
-| `updateFooterHeight` | `height: number` | Update the height of page footers |
-| `updateHeaderContent` | `left: string, right: string` | Update header content for left and right sides |
-| `updateFooterContent` | `left: string, right: string` | Update footer content for left and right sides |
+| `updateHeaderContent` | `left: string, right: string` | Update header HTML content for left and right sides (supports multiline and rich text) |
+| `updateFooterContent` | `left: string, right: string` | Update footer HTML content for left and right sides (supports multiline and rich text) |
 
 #### Using Commands
 
@@ -137,9 +131,21 @@ editor.chain().focus().updateMargins({
   right: 60 
 }).run()
 
-// Update header and footer content
+// Update header and footer content (supports HTML, multiline, and rich text)
 editor.chain().focus().updateHeaderContent('Document Title', 'Page {page}').run()
 editor.chain().focus().updateFooterContent('Confidential', 'Page {page} of {total}').run()
+
+// Example with HTML content in headers/footers
+editor.chain().focus()
+  .updateHeaderContent(
+    '<strong>Company Name</strong><br><small>Department</small>', 
+    '<span style="color: blue;">Page {page}</span>'
+  )
+  .updateFooterContent(
+    '<em>Confidential</em>', 
+    'Page {page}'
+  )
+  .run()
 ```
 
 ### Predefined Page Sizes
@@ -162,8 +168,9 @@ PAGE_SIZES.TABLOID // Tabloid size (1060x1635px)
 
 - Automatic page breaks based on content height
 - Page numbers in the footer
-- Custom header/footer text support
-- use `{page}` variable to display current page number in header/footer text
+- Custom header/footer HTML content support with multiline and rich text
+- Use `{page}` variable to display current page number in header/footer text
+- Header and footer heights are automatically calculated based on content
 - Table pagination with header preservation
 - Responsive design
 - Automatic page height calculation
