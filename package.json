@@ -34,6 +34,7 @@
     "tailwind-merge": "^3.2.0",
     "tailwindcss": "^4.1.4",
     "tiptap-image-plus": "^1.0.5",
+    "tiptap-pagination-plus": "^1.2.5",
     "tiptap-table-plus": "^2.0.9"
   },
   "devDependencies": {
