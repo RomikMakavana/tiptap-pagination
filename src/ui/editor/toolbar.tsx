@@ -15,6 +15,7 @@ import {
   TableIcon,
   Copy,
   Printer,
+  Settings,
 } from "lucide-react";
 import SponsorWork from "../sponsor-work";
 import { Button } from "../button";
@@ -22,15 +23,20 @@ import { Editor } from "@tiptap/react";
 import { ToolbarOptions } from "@/types";
 import * as Dialog from "@radix-ui/react-dialog";
 import { PAGE_SIZES, type PageSize } from "tiptap-pagination-plus";
+import { cn } from "@/lib/utils";
+import { HeaderFooter } from "./header-footer";
+import { useState } from "react";
 
 export const Toolbar = ({
   onlyEditor,
   optionsList,
   editor,
+  className,
 }: {
   onlyEditor: boolean;
   optionsList: ToolbarOptions[];
   editor: Editor;
+  className?: string;
 }) => {
   const insertTable = () => {
     editor
@@ -91,8 +97,10 @@ export const Toolbar = ({
     if(size) editor.chain().focus().updatePageSize(size.value).run();
   };
 
+  const [open, setOpen] = useState(false);
+
   return (
-    <div className="sticky top-0 z-[10] pt-8 toolbar-container max-w-4xl mx-auto">
+    <div className={cn("sticky top-0 z-[10] pt-8 toolbar-container max-w-4xl mx-auto", className)}>
       {onlyEditor ? <> </> : <SponsorWork />}
       <div className="border rounded-lg shadow-sm p-2 bg-muted/90 backdrop-blur-md flex justify-between">
         <div className="flex flex-wrap gap-1">
@@ -316,6 +324,15 @@ export const Toolbar = ({
             </>
           )}
         </div>
+
+        {optionsList.includes("header-footer") && (<>
+          <Button variant="ghost" size="sm" onClick={() => setOpen(true)}>
+            <Settings className="h-4 w-4" /> &nbsp; Header & Footer
+          </Button>
+          <HeaderFooter open={open} onChange={setOpen} editor={editor} />
+        </>
+        )}
+
 
         <div>
           {optionsList.includes("print") && (

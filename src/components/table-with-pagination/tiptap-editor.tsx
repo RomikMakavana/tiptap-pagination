@@ -30,12 +30,10 @@ const TiptapEditor = ({onlyEditor}: {onlyEditor: boolean}) => {
       PaginationPlus.configure({
         pageGap: 20,
         pageBreakBackground: "hsl(var(--background))",
-        pageHeaderHeight: 25,
-        pageFooterHeight: 25,
         footerRight: "Made with ❤️ by Romik",
-        footerLeft: "Page {page}",
-        headerLeft: "Header Left",
-        headerRight: "Header Right",
+        footerLeft: "<p><strong>Contact Me :</strong><br>dev.romikmakavana@gmail.com</p>",
+        headerLeft: "<h1>Tiptap Table Plus With Pagination</h1><p>by Romik Makavana</p>",
+        headerRight: "Page {page}",
         contentMarginTop: 30,
         contentMarginBottom: 30,
         ...PAGE_SIZES.A4,
@@ -62,11 +60,11 @@ const TiptapEditor = ({onlyEditor}: {onlyEditor: boolean}) => {
 
   return (
     <div className="">
-      <Toolbar onlyEditor={onlyEditor} optionsList={["undo", "redo", "bold", "italic", "underline", "strikethrough", "heading", "table", "page-size", "print"]} editor={editor} />
+      <Toolbar onlyEditor={onlyEditor} optionsList={["undo", "redo", "bold", "italic", "underline", "strikethrough", "heading", "table", "page-size", "print", "header-footer"]} editor={editor} />
       <div className="overflow-x-auto" id="printableArea">
         <EditorContent
           editor={editor}
-          className="w-full mb-5 mt-2"
+          className="w-full mb-5 mt-2 editor-container"
           id="editor"
         />
       </div>

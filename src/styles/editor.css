@@ -1,11 +1,11 @@
-#editor:focus-visible {
+.editor-container:focus-visible {
     outline: none;
   }
-#editor p{
+.editor-container p{
   @apply my-2;
 }
-#editor p,
-#editor table {
+.editor-container p,
+.editor-container table {
   position: relative;
 }
 
@@ -13,35 +13,35 @@
   border: 1px solid red;
 }
 
-#editor ul,
-#editor ol {
+.editor-container ul,
+.editor-container ol {
   padding: 0 1rem;
   margin: 0.25rem 1rem 0.25rem 0.4rem;
 }
-#editor ul{
+.editor-container ul{
   list-style-type: disc;
 }
-#editor ol{
+.editor-container ol{
   list-style-type: decimal;
 }
-#editor ol li p, #editor ul li p {
+.editor-container ol li p, .editor-container ul li p {
   margin-top: 0.25em;
   margin-bottom: 0.25em;
 }
 
-#editor code {
+.editor-container code {
   @apply bg-gray-600 text-white px-1 py-0.5 rounded-md mx-0.5;
 }
 
-#editor h1 {
+.editor-container h1 {
   @apply text-2xl font-bold mb-4;
 }
 
-#editor h2 {
+.editor-container h2 {
   @apply text-xl font-bold mb-4;
 }
 
-#editor {
+.editor-container {
   :first-child {
     margin-top: 0;
   }

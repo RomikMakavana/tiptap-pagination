@@ -1,0 +1,31 @@
+.header-footer-container {
+
+    .editor-container {
+        white-space: normal;
+    }
+    .editor-container.is-empty {
+        position: relative;
+        width: 100px;
+    }
+    .editor-container.is-empty::before {
+        position: absolute;
+    }
+
+    .header-left-editor.is-empty::before {
+        content: "Header Left";
+        color: lightslategray;
+    }
+    
+    .header-right-editor.is-empty::before {
+        content: "Header Right";
+        color: lightslategray !important;
+    }
+    .footer-left-editor.is-empty::before {
+        content: "Footer Left";
+        color: lightslategray !important;
+    }
+    .footer-right-editor.is-empty::before {
+        content: "Footer Right";
+        color: lightslategray !important;
+    }
+}

@@ -10,11 +10,11 @@
   @apply border;
 }
 
-#editor table tbody {
+.editor-container table tbody {
   width: 100%;
 }
-#editor table td,
-#editor table th {
+.editor-container table td,
+.editor-container table th {
   border: 1px solid black;
   padding: 5px;
 }
