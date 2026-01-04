@@ -3,7 +3,7 @@ import { Button } from "./button"
 
 export const SponsorWork = () => {  
     return (
-        <div className="w-full mb-1 flex flex-row gap-2 justify-between">
+        <div className="w-full mb-1 flex flex-row gap-2 justify-between bg-white">
           <div className="inline-flex flex-row gap-2">
           <a
             href="https://github.com/RomikMakavana/tiptap-pagination"

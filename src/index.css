@@ -196,9 +196,13 @@ button:focus-visible {
   .editor-container .rm-with-pagination {
     min-height: 1000px !important;
     height: auto !important;
+    width: 100% !important;
+    border: none !important;
+    padding: 0 !important;
   }
 
-  .editor-container {
+  .editor-container, 
+  .editor-container .rm-with-pagination{
     border: none;
   }
 
@@ -207,6 +211,10 @@ button:focus-visible {
   }
  
   .editor-container .rm-first-page-header {
+    display: none;
+  }
+
+  .editor-header {
     display: none;
   }
 }
