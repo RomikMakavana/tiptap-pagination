@@ -18,8 +18,6 @@ import {
   Settings,
   MoreVertical,
   X,
-  ChevronUp,
-  Option,
   EllipsisVertical,
 } from "lucide-react";
 import SponsorWork from "../sponsor-work";

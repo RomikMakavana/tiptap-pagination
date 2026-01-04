@@ -10,9 +10,8 @@ import { PaginationTable } from "tiptap-table-plus";
 import { ImagePlus } from "tiptap-image-plus";
 import { editorContent } from "@/lib/editor-content";
 import { Toolbar, ToolbarRef } from "./editor/toolbar";
-import { PAGE_SIZES } from "tiptap-pagination-plus";
 import { useRef } from "react";
-import { PaginationPlus } from "tiptap-pagination-plus";
+import { PaginationPlus, PAGE_SIZES } from "tiptap-pagination-plus";
 
 const { TablePlus, TableRowPlus, TableCellPlus, TableHeaderPlus } =
   PaginationTable;
