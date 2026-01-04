@@ -48,6 +48,20 @@ const editor = new Editor({
       marginRight: 50,        // Right margin for pages
       contentMarginTop: 10,   // Top margin for content within pages
       contentMarginBottom: 10, // Bottom margin for content within pages
+      // Optional: Per-page header/footer customization
+      customHeader: {
+        2: { headerLeft: "Page 2 Header", headerRight: "Page {page}" }
+      },
+      customFooter: {
+        3: { footerLeft: "Page 3 Footer", footerRight: "Page {page}" }
+      },
+      // Optional: Click callbacks
+      onHeaderClick: ({ event, pageNumber }) => {
+        console.log(`Header clicked on page ${pageNumber}`)
+      },
+      onFooterClick: ({ event, pageNumber }) => {
+        console.log(`Footer clicked on page ${pageNumber}`)
+      },
     }),
   ],
 })
@@ -63,6 +77,46 @@ editor.chain().focus()
   .updateHeaderContent('Document Title', 'Page {page}')
   .updateFooterContent('Confidential', 'Page {page} of {total}')
   .run()
+```
+
+### Per-Page Header/Footer Customization
+
+You can define different headers and footers for specific pages:
+
+```typescript
+PaginationPlus.configure({
+  // Default header/footer for all pages
+  headerLeft: "Default Header",
+  headerRight: "Page {page}",
+  footerLeft: "Default Footer",
+  footerRight: "Page {page}",
+  
+  // Custom header for page 2
+  customHeader: {
+    2: {
+      headerLeft: "Chapter 2",
+      headerRight: "Page {page}"
+    }
+  },
+  
+  // Custom footer for page 3
+  customFooter: {
+    3: {
+      footerLeft: "Special Footer",
+      footerRight: "Page {page}"
+    }
+  },
+  
+  // Handle header/footer clicks
+  onHeaderClick: ({ event, pageNumber }) => {
+    console.log(`Header clicked on page ${pageNumber}`)
+    // Your custom logic here
+  },
+  onFooterClick: ({ event, pageNumber }) => {
+    console.log(`Footer clicked on page ${pageNumber}`)
+    // Your custom logic here
+  }
+})
 ```
 
 ### Table Pagination
@@ -92,6 +146,10 @@ Key points for table pagination:
 | `marginRight` | number | 50 | Right margin for pages |
 | `contentMarginTop` | number | 10 | Top margin for content within pages |
 | `contentMarginBottom` | number | 10 | Bottom margin for content within pages |
+| `customHeader` | `Record<number, { headerLeft: string, headerRight: string }>` | `{}` | Custom headers for specific pages (page number as key) |
+| `customFooter` | `Record<number, { footerLeft: string, footerRight: string }>` | `{}` | Custom footers for specific pages (page number as key) |
+| `onHeaderClick` | `(params: { event: MouseEvent, pageNumber: number }) => void` | `undefined` | Callback function when header is clicked |
+| `onFooterClick` | `(params: { event: MouseEvent, pageNumber: number }) => void` | `undefined` | Callback function when footer is clicked |
 
 ### Commands
 
@@ -106,8 +164,8 @@ The PaginationPlus extension provides several commands to dynamically update pag
 | `updatePageGap` | `gap: number` | Update the gap between pages in pixels |
 | `updateMargins` | `margins: { top: number, bottom: number, left: number, right: number }` | Update page margins |
 | `updateContentMargins` | `margins: { top: number, bottom: number }` | Update content margins within pages |
-| `updateHeaderContent` | `left: string, right: string` | Update header HTML content for left and right sides (supports multiline and rich text) |
-| `updateFooterContent` | `left: string, right: string` | Update footer HTML content for left and right sides (supports multiline and rich text) |
+| `updateHeaderContent` | `left: string, right: string, pageNumber?: number` | Update header HTML content for left and right sides. If `pageNumber` is provided, updates header for that specific page only |
+| `updateFooterContent` | `left: string, right: string, pageNumber?: number` | Update footer HTML content for left and right sides. If `pageNumber` is provided, updates footer for that specific page only |
 
 #### Using Commands
 
@@ -134,6 +192,10 @@ editor.chain().focus().updateMargins({
 // Update header and footer content (supports HTML, multiline, and rich text)
 editor.chain().focus().updateHeaderContent('Document Title', 'Page {page}').run()
 editor.chain().focus().updateFooterContent('Confidential', 'Page {page} of {total}').run()
+
+// Update header/footer for specific page
+editor.chain().focus().updateHeaderContent('Page 2 Title', 'Page {page}', 2).run()
+editor.chain().focus().updateFooterContent('Page 3 Footer', 'Page {page}', 3).run()
 
 // Example with HTML content in headers/footers
 editor.chain().focus()
@@ -169,6 +231,8 @@ PAGE_SIZES.TABLOID // Tabloid size (1060x1635px)
 - Automatic page breaks based on content height
 - Page numbers in the footer
 - Custom header/footer HTML content support with multiline and rich text
+- **Per-page header/footer customization** - Define different headers and footers for specific pages
+- **Header/footer click callbacks** - Handle user interactions with headers and footers
 - Use `{page}` variable to display current page number in header/footer text
 - Header and footer heights are automatically calculated based on content
 - Table pagination with header preservation
