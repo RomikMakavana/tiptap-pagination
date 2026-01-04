@@ -9,13 +9,16 @@ import ListItem from "@tiptap/extension-list-item";
 import { PaginationTable } from "tiptap-table-plus";
 import { ImagePlus } from "tiptap-image-plus";
 import { editorContent } from "@/lib/editor-content";
-import { Toolbar } from "./editor/toolbar";
-import { PaginationPlus, PAGE_SIZES } from "tiptap-pagination-plus";
+import { Toolbar, ToolbarRef } from "./editor/toolbar";
+import { PAGE_SIZES } from "tiptap-pagination-plus";
+import { useRef } from "react";
+import { PaginationPlus } from "tiptap-pagination-plus";
 
 const { TablePlus, TableRowPlus, TableCellPlus, TableHeaderPlus } =
   PaginationTable;
 
 const TiptapEditor = ({ onlyEditor }: { onlyEditor: boolean }) => {
+  const toolbarRef = useRef<ToolbarRef | null>(null);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -39,15 +42,27 @@ const TiptapEditor = ({ onlyEditor }: { onlyEditor: boolean }) => {
       PaginationPlus.configure({
         pageGap: 20,
         pageBreakBackground: "hsl(var(--background))",
-        footerRight: "Made with ❤️ by Romik",
+        footerRight: "Normal Footer",
         footerLeft: "<p><strong>Contact Me :</strong><br>dev.romikmakavana@gmail.com</p>",
-        headerLeft: "<h1>Tiptap Pagination Plus</h1><p>by Romik Makavana</p>",
+        headerLeft: "<p>Normal Header</p>",
         headerRight: "Page {page}",
         contentMarginTop: 30,
         contentMarginBottom: 30,
         ...PAGE_SIZES.A4,
         marginTop: 76,
         marginBottom: 76,
+        customFooter: {
+          1: { footerLeft: "<p><strong>Contact Me :</strong><br>dev.romikmakavana@gmail.com</p>", footerRight: "Made with ❤️ by Romik" },
+        },
+        customHeader: {
+          1: { headerLeft: "<h1>Tiptap Pagination Plus</h1> <h2>Unique Header for first page</h2><p>by Romik Makavana</p>", headerRight: "Page {page}" },
+        },
+        onHeaderClick: (params) => {
+          toolbarRef.current?.onHeaderClick(params);
+        },
+        onFooterClick: (params) => {
+          toolbarRef.current?.onFooterClick(params);
+        },
       }),
     ],
     // content: editorContentLong,
@@ -90,6 +105,7 @@ const TiptapEditor = ({ onlyEditor }: { onlyEditor: boolean }) => {
           "header-footer",
         ]}
         editor={editor}
+        ref={toolbarRef}
       />
       <div className="overflow-x-auto relative" id="printableArea">
         <EditorContent editor={editor} id="editor" className="w-full mb-5 mt-2 editor-container" />
