@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "build:404": "npm run build && cp docs/index.html docs/404.html && grunt"
@@ -35,7 +35,7 @@
     "tailwind-merge": "^3.2.0",
     "tailwindcss": "^4.1.4",
     "tiptap-image-plus": "^1.0.5",
-    "tiptap-pagination-plus": "^3.0.2",
+    "tiptap-pagination-plus": "^3.0.3",
     "tiptap-table-plus": "^2.0.9"
   },
   "devDependencies": {
