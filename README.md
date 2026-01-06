@@ -12,9 +12,25 @@ https://romikmakavana.me/tiptap
 
 ## Installation
 
+This package supports both TipTap v2 and TipTap v3. Choose the appropriate installation command based on your TipTap version:
+
+### For TipTap v3 (Recommended)
+
 ```bash
+# Install latest version (defaults to TipTap v3)
 npm install tiptap-pagination-plus
-```  
+
+# Or explicitly install the tiptap-v3 tag
+npm install tiptap-pagination-plus@tiptap-v3
+```
+
+### For TipTap v2
+
+```bash
+npm install tiptap-pagination-plus@tiptap-v2
+```
+
+**Note:** Both versions are maintained and updated with each release. The `latest` tag (default) points to the TipTap v3 compatible version.  
 
 ## Usage
 
