@@ -2,31 +2,21 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
-import TextStyle from "@tiptap/extension-text-style";
+import { TextStyle } from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
 import { editorContent } from "@/lib/contents/table-plus-with-pagination";
 import { Toolbar } from "@/ui/editor/toolbar";
-import { PaginationTable } from "tiptap-table-plus";
 import { PAGE_SIZES, PaginationPlus } from "tiptap-pagination-plus";
+import { TableKitPlus } from "tiptap-table-plus";
 
-const { TableCellPlus, TableHeaderPlus, TableRowPlus, TablePlus } = PaginationTable;
 
 const TiptapEditor = ({onlyEditor}: {onlyEditor: boolean}) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Underline,
       TextStyle,
       Color,
-      TablePlus.configure({
-        resizeHandleStyle: {
-          background: "gray",
-        },
-      }),
-      TableRowPlus,
-      TableCellPlus,
-      TableHeaderPlus,
+      TableKitPlus,
       PaginationPlus.configure({
         pageGap: 20,
         pageBreakBackground: "hsl(var(--background))",

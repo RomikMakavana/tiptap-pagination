@@ -1,7 +1,7 @@
 "use client";
 import * as Dialog from "@radix-ui/react-dialog";
 import Color from "@tiptap/extension-color";
-import TextStyle from "@tiptap/extension-text-style";
+import { TextStyle } from "@tiptap/extension-text-style";
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
