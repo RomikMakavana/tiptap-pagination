@@ -3,14 +3,13 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
-import TextStyle from "@tiptap/extension-text-style";
+import {TextStyle} from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
-import TableRow from "@tiptap/extension-table-row";
-import TableCell from "@tiptap/extension-table-cell";
-import TableHeader from "@tiptap/extension-table-header";
-import {TablePlus} from "tiptap-table-plus";
+import {WithoutPagination} from "tiptap-table-plus";
 import { editorContent } from "@/lib/contents/table-plus-without-pagination";
 import { Toolbar } from "@/ui/editor/toolbar";
+
+const {TableKitPlus } = WithoutPagination;
 
 const TiptapEditor = ({onlyEditor}: {onlyEditor: boolean}) => {
   const editor = useEditor({
@@ -19,10 +18,10 @@ const TiptapEditor = ({onlyEditor}: {onlyEditor: boolean}) => {
       Underline,
       TextStyle,
       Color,
-      TableRow,
-      TableCell,
-      TableHeader,
-      TablePlus,
+      TableKitPlus
+      // TableRow,
+      // TableCell,
+      // TableHeader,
     ],
     content: editorContent,
     editorProps: {

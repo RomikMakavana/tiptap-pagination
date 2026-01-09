@@ -2,33 +2,27 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
-import TextStyle from "@tiptap/extension-text-style";
+import { TextStyle } from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
-import ListItem from "@tiptap/extension-list-item";
-import { PaginationTable } from "tiptap-table-plus";
 import { ImagePlus } from "tiptap-image-plus";
 import { editorContent } from "@/lib/editor-content";
-import { Toolbar, ToolbarRef } from "./editor/toolbar";
+import { 
+  Toolbar, 
+  ToolbarRef } from "./editor/toolbar";
 import { useRef } from "react";
 import { PaginationPlus, PAGE_SIZES } from "tiptap-pagination-plus";
-
-const { TablePlus, TableRowPlus, TableCellPlus, TableHeaderPlus } =
-  PaginationTable;
+import { TableKitPlus } from "tiptap-table-plus";
 
 const TiptapEditor = ({ onlyEditor }: { onlyEditor: boolean }) => {
   const toolbarRef = useRef<ToolbarRef | null>(null);
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Underline,
+      // Underline,
       TextStyle,
       Color,
-      TablePlus,
-      TableRowPlus,
-      TableCellPlus,
-      TableHeaderPlus,
-      ListItem,
+      // ListItem,
+      TableKitPlus,
       ImagePlus.configure({
         inline: false,
         containerStyle: {
