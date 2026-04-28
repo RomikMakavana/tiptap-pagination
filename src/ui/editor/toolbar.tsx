@@ -28,9 +28,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { PAGE_SIZES } from "tiptap-pagination-plus";
 import { cn } from "@/lib/utils";
 import { HeaderFooter } from "./header-footer";
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { forwardRef, useCallback, useEffect, useId, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState, type FC, type KeyboardEvent } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { FooterClickEvent, HeaderClickEvent, PageNumber, PageSize } from "tiptap-pagination-plus";
+import { FooterClickEvent, HeaderClickEvent, PageNumber, PageSize } from "@/tiptap/pagination";
 
 type ToolbarItem = {
   key: string;
@@ -50,6 +50,117 @@ type ToolbarProps = {
   onHeaderClick: HeaderClickEvent;
   onFooterClick: FooterClickEvent;
 }
+
+type PaginationSwitchProps = {
+  enabled: boolean;
+  onChange: (next: boolean) => void;
+  variant?: "toolbar" | "sheet";
+};
+
+const PaginationSwitch: FC<PaginationSwitchProps> = ({
+  enabled,
+  onChange,
+  variant = "toolbar",
+}) => {
+  const sheet = variant === "sheet";
+  const switchId = useId();
+  const labelId = `${switchId}-pagination-label`;
+  const controlId = `${switchId}-pagination-switch`;
+
+  const toggle = useCallback(() => {
+    onChange(!enabled);
+  }, [enabled, onChange]);
+
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLButtonElement>) => {
+      if (e.key === " " || e.key === "Enter") {
+        e.preventDefault();
+        toggle();
+      }
+    },
+    [toggle]
+  );
+
+  const trackH = sheet ? "h-10 w-[3.25rem]" : "h-7 w-12";
+  const thumb = sheet ? "size-8" : "size-6";
+  const thumbOff = sheet ? "left-1" : "left-0.5";
+  const thumbOn = sheet
+    ? "left-[calc(100%-0.25rem-2rem)]"
+    : "left-[calc(100%-0.125rem-1.5rem)]";
+
+  return (
+    <div
+      className={cn(
+        "flex items-center gap-2 rounded-lg border border-border bg-background shadow-sm",
+        sheet ? "w-full flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between" : "h-9 shrink-0 px-2.5 py-1"
+      )}
+    >
+      <div className={cn("min-w-0 flex-1", sheet && "w-full")}>
+        <p
+          id={labelId}
+          className={cn("font-semibold leading-tight text-foreground", sheet ? "text-base" : "text-sm")}
+        >
+          Pagination
+        </p>
+        {sheet && (
+          <p className="mt-0.5 text-sm text-muted-foreground">
+            {enabled ? "Page breaks and headers are shown." : "Pagination is turned off."}
+          </p>
+        )}
+      </div>
+
+      <div
+        className={cn(
+          "flex shrink-0 items-center gap-2",
+          sheet && "w-full justify-end sm:w-auto sm:justify-start"
+        )}
+      >
+        <span
+          className={cn(
+            "inline-flex min-w-[2.25rem] select-none items-center justify-center rounded-md px-2 py-0.5 font-bold tabular-nums tracking-wide",
+            sheet ? "text-xs" : "text-[10px]",
+            enabled
+              ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-200"
+              : "bg-muted text-muted-foreground"
+          )}
+          aria-hidden
+        >
+          {enabled ? "ON" : "OFF"}
+        </span>
+
+        <button
+          id={controlId}
+          type="button"
+          role="switch"
+          data-state={enabled ? "on" : "off"}
+          aria-checked={enabled}
+          aria-labelledby={labelId}
+          onClick={toggle}
+          onKeyDown={onKeyDown}
+          className={cn(
+            "relative box-border shrink-0 cursor-pointer rounded-full border-2 font-[inherit] shadow-[inset_0_1px_2px_rgba(0,0,0,0.12)] transition-colors duration-200 ease-out",
+            "!m-0 !min-h-0 !min-w-0 !p-0",
+            "!outline-none focus:!outline-none focus-visible:!outline-none",
+            "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            trackH,
+            enabled
+              ? "border-emerald-800/50 !bg-emerald-600 dark:border-emerald-300/45 dark:!bg-emerald-500"
+              : "border-zinc-500/80 !bg-zinc-300 dark:border-zinc-500 dark:!bg-zinc-600"
+          )}
+        >
+          <span
+            aria-hidden
+            className={cn(
+              "pointer-events-none absolute top-1/2 -translate-y-1/2 rounded-full bg-white shadow-md ring-1 ring-black/10 transition-[left] duration-200 ease-out",
+              thumb,
+              enabled ? thumbOn : thumbOff
+            )}
+          />
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export const Toolbar = forwardRef<ToolbarRef, ToolbarProps>(({
   onlyEditor,
@@ -121,6 +232,26 @@ export const Toolbar = forwardRef<ToolbarRef, ToolbarProps>(({
   };
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const readPaginationEnabled = () => {
+    const s = editor.storage.PaginationPlus as { paginationEnabled?: boolean } | undefined;
+    if (typeof s?.paginationEnabled === "boolean") {
+      return s.paginationEnabled;
+    }
+    return true;
+  };
+  const [paginationOn, setPaginationOn] = useState(readPaginationEnabled);
+
+  const handlePaginationEnabled = useCallback(
+    (next: boolean) => {
+      setPaginationOn(next);
+      if(next) {
+        editor.chain().focus().enablePagination().run();
+      }else{
+        editor.chain().focus().disablePagination().run();
+      }
+    },
+    [editor]
+  );
 
   // ========================================================================
   // 2. TOOLBAR ITEMS DEFINITION
@@ -532,6 +663,10 @@ export const Toolbar = forwardRef<ToolbarRef, ToolbarProps>(({
                 </select>
               )}
 
+              {optionsList.includes("pagination-toggle") && (
+                <PaginationSwitch enabled={paginationOn} onChange={handlePaginationEnabled} />
+              )}
+
               <Button variant="ghost" size="sm" onClick={setMobileMenuOpen.bind(null, true)}>
                 <EllipsisVertical className="h-4 w-4" />
               </Button>
@@ -547,7 +682,7 @@ export const Toolbar = forwardRef<ToolbarRef, ToolbarProps>(({
             aria-hidden="true"
           >
             {activeItems.map((item, index) => (
-              <div key={`ghost-${item.key}`} ref={(el) => (ghostItemRefs.current[index] = el)} className="flex gap-1 shrink-0">
+              <div key={`ghost-${item.key}`} ref={(el) => { ghostItemRefs.current[index] = el; }} className="flex gap-1 shrink-0">
                 {item.render?.()}
                 {item.children?.filter((child) => child.show).map((child) => <div key={`ghost-${child.key}`} className="shrink-0">{child.render?.()}</div>)}
               </div>
@@ -659,6 +794,15 @@ export const Toolbar = forwardRef<ToolbarRef, ToolbarProps>(({
                           <select onChange={handlePageSizeChange} className="w-full border rounded p-2 text-sm bg-background">
                             {pageOptions.map((size, index) => <option key={index} value={size.label}>{size.label}</option>)}
                           </select>
+                        </div>
+                      )}
+                      {optionsList.includes("pagination-toggle") && (
+                        <div className="mt-3">
+                          <PaginationSwitch
+                            enabled={paginationOn}
+                            onChange={handlePaginationEnabled}
+                            variant="sheet"
+                          />
                         </div>
                       )}
                    </div>

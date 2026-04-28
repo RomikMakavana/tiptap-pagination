@@ -13,4 +13,5 @@ export type ToolbarOptions =
   | "print"
   | "blockquote"
   | "header-footer"
-  | "page-size";
+  | "page-size"
+  | "pagination-toggle";

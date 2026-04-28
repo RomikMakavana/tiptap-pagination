@@ -95,6 +95,7 @@ const TiptapEditor = ({ onlyEditor }: { onlyEditor: boolean }) => {
           "blockquote",
           "print",
           "page-size",
+          "pagination-toggle",
           "header-footer",
         ]}
         editor={editor}
